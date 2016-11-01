@@ -22,10 +22,22 @@ In this way we will get a more consistent usage.
 And I didn't wanted to learn X11 driver protocol.
 
 The uinput layer is nice since you can write your input device driver as a
-userspace application. It also support the absolute pointer mode.
+userspace application. It also supports the absolute pointer mode.
 Perfect for a tablet input.
 
 I have butcher the logic from the xorg-x11-drv-summa driver.
 For the first stage I just want my genius easy pen to work.
 
 After that I will try to hit 100% compatibility with the summa driver.
+
+Compilation instructions.
+
+```
+make easypen_input
+```
+
+To use it just run it.
+
+```
+easypen_input {ttyS dev file}
+```
