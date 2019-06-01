@@ -106,7 +106,7 @@ int main(int argc, char ** argv) {
         unsigned char readBuffer [5];
         struct timeval evtime;
         int nowX, nowY, nowLeft, nowRight, evNr;
-        struct input_event sendev[4];
+        struct input_event sendev[5];
         do {
             if (read(dfd, readBuffer, 1) < 0) die("error: device read");
         } while (0 == (readBuffer[0] & 0x80));
@@ -143,8 +143,13 @@ int main(int argc, char ** argv) {
             sendev[evNr].code = BTN_RIGHT;
             sendev[evNr++].value = lastRight = nowRight;
         }
-        if (evNr)
+        if (evNr) {
+            sendev[evNr].time = evtime;
+            sendev[evNr].type = EV_SYN;
+            sendev[evNr].code = SYN_REPORT;
+            sendev[evNr++].value = 0;
             write(evfd, sendev, sizeof(struct input_event) * evNr);
+        }
     }
 
     return 0;
